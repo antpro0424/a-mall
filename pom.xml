@@ -14,6 +14,8 @@
     <module>order-service</module>
     <module>payment-service</module>
     <module>account-service</module>
+    <module>cart-service</module>
+    <module>common</module>
   </modules>
 
   <properties>

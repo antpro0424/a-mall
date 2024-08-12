@@ -7,10 +7,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>payment-service</artifactId>
+    <artifactId>cart-service</artifactId>
     <packaging>jar</packaging>
 
-    <name>payment-service</name>
+    <name>cart-service</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -18,5 +18,6 @@
     </properties>
 
     <dependencies>
+
     </dependencies>
 </project>

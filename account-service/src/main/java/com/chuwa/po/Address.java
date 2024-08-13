@@ -1,4 +1,4 @@
-package com.chuwa.dto;
+package com.chuwa.po;
 
 import jakarta.persistence.*;
 import lombok.Data;

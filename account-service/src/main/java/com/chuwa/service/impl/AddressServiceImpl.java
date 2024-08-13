@@ -1,6 +1,6 @@
 package com.chuwa.service.impl;
 
-import com.chuwa.dto.Address;
+import com.chuwa.po.Address;
 import com.chuwa.repository.AddressRepository;
 import com.chuwa.service.AddressService;
 import lombok.AllArgsConstructor;

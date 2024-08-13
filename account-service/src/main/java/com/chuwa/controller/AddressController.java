@@ -1,6 +1,6 @@
 package com.chuwa.controller;
 
-import com.chuwa.dto.Address;
+import com.chuwa.po.Address;
 import com.chuwa.service.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Tag(name="User Address Controller", description = "APIs for operating user's addresses.")
 @RestController
 @RequestMapping("/api/v0/address")
 public class AddressController {
     @Autowired
     AddressService addressService;
+
     @Operation(summary = "Get address by address id")
     @GetMapping("{addressId}")
     public Address getAddressById(@PathVariable("addressId") Long addressId) {
@@ -25,5 +28,9 @@ public class AddressController {
     }
 
     // TODO: Other APIs, like find all addresses according to the userId.
-
+    @Operation
+    @GetMapping
+    public List<Address> getAddresses() {
+        return null;
+    }
 }

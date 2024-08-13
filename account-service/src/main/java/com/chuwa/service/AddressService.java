@@ -1,6 +1,6 @@
 package com.chuwa.service;
 
-import com.chuwa.dto.Address;
+import com.chuwa.po.Address;
 
 public interface AddressService {
     Address getAddressById(Long id);

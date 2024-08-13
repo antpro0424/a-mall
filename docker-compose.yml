@@ -12,6 +12,16 @@ services:
     volumes:
       - cassandra-data:/var/lib/cassandra
 
+  cassandra-load-keyspace:
+    image: cassandra:latest
+    container_name: cassandra-load-keyspace
+    depends_on:
+      - cassandra
+
+    volumes:
+      - ./init-scripts/init-cassandra.cql:/init-cassandra.cql
+    command: /bin/bash -c "sleep 100 && echo loading cassandra keyspace && cqlsh cassandra -f /init-cassandra.cql"
+
   mysql:
     image: mysql:latest
     container_name: mysql-container

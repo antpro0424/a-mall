@@ -1,0 +1,29 @@
+version: '0'
+
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra-container
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_USER=admin
+      - CASSANDRA_PASSWORD=admin
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: "0424"
+      MYSQL_DATABASE: amall
+    ports:
+      - "13306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql  # Volume for data persistence
+    restart: always  # Restart policy
+
+volumes:
+  cassandra-data:
+  mysql-data:

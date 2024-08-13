@@ -8,4 +8,4 @@ spring:
     active: dev
   data:
     mongodb:
-      uri: mongodb+srv://aierken103:a123456@cluster0.gxpsiii.mongodb.net/<your-database-name>?retryWrites=true&w=majority&appName=Cluster0
+      uri: 

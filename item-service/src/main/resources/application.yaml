@@ -8,8 +8,4 @@ spring:
     active: dev
   data:
     mongodb:
-      host: localhost
-      port: 13307
-      database: amall
-      username: root
-      password: '0424'
+      uri: mongodb+srv://aierken103:a123456@cluster0.gxpsiii.mongodb.net/<your-database-name>?retryWrites=true&w=majority&appName=Cluster0

@@ -1,0 +1,15 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: order-service
+  profiles:
+    active: dev
+  cassandra:
+    keyspace-name: order_keyspace
+    contact-points: 127.0.0.1
+    port: 9042
+#    schema-action: recreate
+    schema-action: create_if_not_exists
+    local-datacenter: datacenter1

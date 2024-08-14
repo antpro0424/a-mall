@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Eureka Server 的地址
+  instance:
+    ip-address: localhost
+    prefer-ip-address: true  # 使用 IP 地址而不是主机名注册
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: account-service
+          uri: lb://account-service
+          predicates:
+            - Path=/api/v0/account/**
+
+amall:
+  jwt:
+    location: classpath:amall.jks
+    alias: amall
+    password: amall123
+    tokenTTL: 30m
+  auth:
+    excludePaths:
+#      - /api/v0/search/**
+      - /api/v0/account/user/login
+      - /api/v0/hi/

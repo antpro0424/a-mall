@@ -1,5 +1,8 @@
 package com.chuwa.service;
 
-public interface UserService {
+import com.chuwa.dto.LoginFormDTO;
+import com.chuwa.vo.UserLoginVO;
 
+public interface UserService {
+    UserLoginVO login(LoginFormDTO loginFormDTO);
 }

@@ -19,3 +19,18 @@ spring:
     properties:
       hibernate:
         format_sql: true  # 格式化SQL输出
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Eureka Server 的地址
+  instance:
+    ip-address: localhost
+    prefer-ip-address: true  # 使用 IP 地址而不是主机名注册
+
+amall:
+  jwt:
+    location: classpath:amall.jks
+    alias: amall
+    password: amall123
+    tokenTTL: 30m

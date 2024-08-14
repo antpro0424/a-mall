@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name="User Address Controller", description = "APIs for operating user's addresses.")
+@Tag(name="Address Controller", description = "APIs for operating user's addresses.")
 @RestController
-@RequestMapping("/api/v0/address")
+@RequestMapping("/api/v0/account/address")
 public class AddressController {
     @Autowired
     AddressService addressService;

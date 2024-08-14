@@ -7,7 +7,10 @@ DESCRIBE TABLES;
 
 SELECT table_name FROM system_schema.tables WHERE keyspace_name = 'my_keyspace';
 DROP TABLE keyspace_name.table_name;
+
+SELECT * FROM orders;
 ```
+
 
 # Docker
 ```

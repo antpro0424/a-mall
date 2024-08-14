@@ -1,0 +1,37 @@
+POST http://localhost:8084/v1/orders
+{
+  "key": {
+    "customerId": "e87db649-461f-43f5-8bf3-56bfefd63b3c",
+    "orderDate": "2024-08-15",
+    "orderId": "8f538b69-9b94-4464-b4b5-1278d8515d42"
+  },
+  "totalAmount": 150.75,
+  "items": {
+    "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14": {
+        "itemId": "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14",
+        "itemName":"Petkit Litter",
+        "unitPrice":20.4,
+        "quantity":2,
+        "currency":"USD",
+        "picList":[]
+    },
+    "1785d272-cb3f-43bf-864f-2aa86332938d": {
+        "itemId": "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14",
+        "itemName":"Arm&Hammer Litter",
+        "unitPrice":30.2,
+        "quantity":3,
+        "currency":"USD",
+        "picList":[]
+    }
+  },
+  "payment":{
+    "orderId":"8f538b69-9b94-4464-b4b5-1278d8515d42",
+    "paymentId": "faef7b3e-d08d-4561-bad3-60c47c3afe15",
+    "paymentType":"VISA",
+    "paymentDetails": "here is the encrypt info",
+    "paymentStatus": "CREATED",
+    "paymentAmount": 150.75,
+    "paymentCurrency": "USD"
+  },
+  "orderStatus": "Order Created"
+}

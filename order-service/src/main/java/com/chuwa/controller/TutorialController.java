@@ -1,7 +1,7 @@
 package com.chuwa.controller;
 
 
-import com.chuwa.model.Tutorial;
+import com.chuwa.entity.Tutorial;
 import com.chuwa.repository.TutorialRepository;
 import com.datastax.driver.core.utils.UUIDs;
 import org.springframework.beans.factory.annotation.Autowired;

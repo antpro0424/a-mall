@@ -1,7 +1,7 @@
 package com.chuwa.repository;
 
 
-import com.chuwa.model.Tutorial;
+import com.chuwa.entity.Tutorial;
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;

@@ -89,6 +89,43 @@ services:
       - mysql-data:/var/lib/mysql  # Volume for data persistence
     restart: always  # Restart policy
 
+  item-service:
+    image: a-mall/item-service:1.0-SNAPSHOT
+    container_name: item-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - cassandra
+      - mysql
+      - cassandra-load-keyspace
+      - eureka-server
+
+  order-service:
+    image: a-mall/order-service:1.0-SNAPSHOT
+    container_name: order-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - cassandra
+      - mysql
+      - cassandra-load-keyspace
+      - item-service
+      - eureka-server
+    restart: always
+
+  eureka-server:
+    image: a-mall/eureka-server:1.0-SNAPSHOT
+    container_name: eureka-service
+    ports:
+      - "8761:8761"
+    depends_on:
+      - mysql
+      - cassandra
+      - cassandra-load-keyspace
+      - kafka
+      - zookeeper
+
+
 volumes:
   cassandra-data:
   mysql-data:

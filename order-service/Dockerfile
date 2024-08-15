@@ -1,7 +1,9 @@
-FROM maven:3.8.5-openjdk-17
+FROM openjdk:17-jdk-alpine
 
-WORKDIR /order-service-app
-COPY . .
-RUN mvn clean install
+VOLUME /tmp
 
-CMD mvn spring-boot:run
+COPY target/order-service-1.0-SNAPSHOT.jar /app.jar
+
+EXPOSE 8084
+
+ENTRYPOINT ["java","-jar","/app.jar"]

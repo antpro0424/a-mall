@@ -4,6 +4,7 @@ import com.chuwa.dto.SignupFormDTO;
 import com.chuwa.exception.BadRequestException;
 import com.chuwa.po.Address;
 import com.chuwa.service.AddressService;
+import com.chuwa.utils.UserContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,11 @@ public class AddressController {
 
     @Operation(summary = "Get address by address id")
     @GetMapping("{addressId}")
-    public Address getAddressById(@PathVariable("addressId") Long addressId, @RequestHeader(value="user-info", required = false) String userInfo) {
+    public Address getAddressById(@PathVariable("addressId") Long addressId) {
+        System.out.println("USER id: " + UserContext.getUser());
         Address address = addressService.getAddressById(addressId);
 
-        Long userId = Long.valueOf(userInfo);
+        Long userId = UserContext.getUser();
         if (!address.getUserId().equals(userId)) {
             throw new BadRequestException("Address does not belong to user.");
         }
@@ -37,17 +39,19 @@ public class AddressController {
     @Operation(summary = "Get all addresses of current user")
     @GetMapping
     public Page<Address> findMyAddresses(
-            @RequestHeader(value = "user-info", required = false) String userInfo,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        Long userId = Long.valueOf(userInfo);
+        Long userId = UserContext.getUser();
         Pageable pageable = PageRequest.of(page, size);
         return addressService.findAddressesByUserId(userId, pageable);
     }
 
 //    @Operation(summary = "Add an address of current user")
 //    @PostMapping
+//    public Address addAddress(@RequestBody Address address) {
+//        return addressService.addAddress();
+//    }
 
     
 }

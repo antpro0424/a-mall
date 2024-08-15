@@ -44,11 +44,17 @@ public class AddressController {
         return addressService.findAddressesByUserId(userId, pageable);
     }
 
-//    @Operation(summary = "Add an address of current user")
-//    @PostMapping
-//    public Address addAddress(@RequestBody Address address) {
-//        return addressService.addAddress();
-//    }
+    @Operation(summary = "Add an address of current user")
+    @PostMapping
+    public Address addAddress(@RequestBody Address address) {
+        address.setUserId(UserContext.getUser());
+        return addressService.addAddress(address);
+    }
 
+//    @Operation(summary = "update address information")
+//    @PostMapping("/update")
+//    public Address updateAddress(@RequestBody Address address) {
+//        return addressService.updateAddress(address);
+//    }
     
 }

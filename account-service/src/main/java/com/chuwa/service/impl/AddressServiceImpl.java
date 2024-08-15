@@ -21,4 +21,13 @@ public class AddressServiceImpl implements AddressService {
     public Page<Address> findAddressesByUserId(Long userId, Pageable pageable) {
         return addressRepository.findByUserId(userId, pageable);
     }
+
+    public Address addAddress(Address address) {
+        return addressRepository.save(address);
+    }
+//
+//    @Override
+//    public Address updateAddress(Address address) {
+//        return addressRepository.save(address);
+//    }
 }

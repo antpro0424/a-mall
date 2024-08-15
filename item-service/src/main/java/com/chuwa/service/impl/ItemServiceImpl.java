@@ -3,9 +3,12 @@ package com.chuwa.service.impl;
 import com.chuwa.domain.po.Item;
 import com.chuwa.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import com.chuwa.repository.ItemRepository;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +34,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
+    public Page<Item> getAllItems(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return itemRepository.findAll(pageable);
     }
 
     @Override

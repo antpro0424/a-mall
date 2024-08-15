@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/orders/user")
+@RequestMapping("/api/v0/orders/user")
 public class UserController {
     private final OrderService orderService;
 

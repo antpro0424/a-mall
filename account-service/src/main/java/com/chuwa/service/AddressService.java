@@ -6,7 +6,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface AddressService {
 
-    public Address getAddressById(Long id);
+    Address getAddressById(Long id);
 
-    public Page<Address> findAddressesByUserId(Long userId, Pageable pageable);
+    Page<Address> findAddressesByUserId(Long userId, Pageable pageable);
+
+    Address addAddress(Address address);
+
+//    Address updateAddress(Address address);
 }

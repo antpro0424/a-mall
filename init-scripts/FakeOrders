@@ -4,12 +4,12 @@ POST http://localhost:8084/v1/orders
   "totalAmount": 150.75,
   "items": {
     "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14": {
-        "itemId": "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14",
-        "itemName":"Petkit Litter",
+        "id": "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14",
+        "name":"Petkit Litter",
         "unitPrice":20.4,
         "quantity":2,
-        "currency":"USD",
-        "picList":[]
+        "uoc":"USD",
+        "pictureUrls":[]
     },
     "1785d272-cb3f-43bf-864f-2aa86332938d": {
         "itemId": "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14",

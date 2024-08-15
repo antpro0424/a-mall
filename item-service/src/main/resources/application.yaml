@@ -17,3 +17,4 @@ eureka:
   instance:
     ip-address: localhost
     prefer-ip-address: true  # 使用 IP 地址而不是主机名注册
+

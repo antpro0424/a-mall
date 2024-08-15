@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("用户名或密码错误");
         }
         // 5.生成TOKEN
-        String token = jwtTool.generateToken(user.getUsername(), jwtProperties.getTokenTTL());
+        String token = jwtTool.generateToken(user.getId().toString(), jwtProperties.getTokenTTL());
         // 6.封装VO返回
         UserLoginVO vo = new UserLoginVO();
         vo.setUserId(user.getId());

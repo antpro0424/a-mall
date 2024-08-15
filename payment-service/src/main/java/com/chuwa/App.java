@@ -8,6 +8,12 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        Object o = new Object() {
+            public boolean equals(Object t) {
+                return t.equals("hi");
+            }
+        };
+        System.out.println(o.equals("hi"));
+
     }
 }

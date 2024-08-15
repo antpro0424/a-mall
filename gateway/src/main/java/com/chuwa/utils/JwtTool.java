@@ -22,12 +22,12 @@ public class JwtTool {
     }
 
     // 生成JWT Token
-    public String generateToken(String username, Duration ttl) {
+    public String generateToken(String userId, Duration ttl) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + ttl.toMillis());
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userId)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(keyPair.getPrivate(), SignatureAlgorithm.RS256)
@@ -35,7 +35,7 @@ public class JwtTool {
     }
 
     // 解析JWT Token
-    public String parseToken(String token) {
+    public Long parseToken(String token) {
         // 1. 校验token是否为空
         if (token == null) {
             throw new UnauthorizedException("User did not login.");
@@ -55,6 +55,6 @@ public class JwtTool {
         }
 
 
-        return claims.getSubject();
+        return Long.valueOf(claims.getSubject());
     }
 }

@@ -10,6 +10,8 @@ eureka:
     prefer-ip-address: true  # 使用 IP 地址而不是主机名注册
 
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: gateway
   cloud:
@@ -19,6 +21,10 @@ spring:
           uri: lb://account-service
           predicates:
             - Path=/api/v0/account/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/v0/orders
 
 amall:
   jwt:

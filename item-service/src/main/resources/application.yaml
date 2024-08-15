@@ -8,4 +8,4 @@ spring:
     active: dev
   data:
     mongodb:
-      uri:
+      uri: 

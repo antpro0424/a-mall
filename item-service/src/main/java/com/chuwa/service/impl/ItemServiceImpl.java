@@ -45,8 +45,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findItemsByName(String name) {
-        return itemRepository.findByName(name);
+    public Page<Item> findItemsByName(String name,Pageable pageable) {
+        return itemRepository.findByName(name,pageable);
     }
 
 

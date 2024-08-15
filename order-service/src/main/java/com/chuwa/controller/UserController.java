@@ -1,17 +1,12 @@
 package com.chuwa.controller;
 
-import com.chuwa.DTO.CassandraPage;
-import com.chuwa.DTO.Paginated;
 import com.chuwa.entity.Order;
 import com.chuwa.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Base64;
 import java.util.UUID;
 
 @RestController
@@ -37,17 +32,13 @@ public class UserController {
 //    }
 
     @GetMapping("/{userId}")
-    public CassandraPage<Order> getPageOfUsers(@PathVariable UUID userId,final @Valid Paginated paginated) {
-        return orderService.getPageOfOrders(userId, paginated);
-    }
-//    public Slice<Order> getOrders(@PathVariable UUID userId,
-//                                          @RequestParam int page,
-//                                          @RequestParam int size,
-//                                  @RequestParam(required = false) String pagingState
-//                               ) {
-//
-//        return orderService.findByCustomerId( userId, page, size, pagingState);
-//    }
+    public Slice<Order> getOrders(@PathVariable UUID userId,
+                                  @RequestParam int page,
+                                  @RequestParam int size,
+                                  @RequestParam(required = false) String pagingState
+    ) {
 
+        return orderService.getPageOfOrders( userId, page, size, pagingState);
+    }
 
 }

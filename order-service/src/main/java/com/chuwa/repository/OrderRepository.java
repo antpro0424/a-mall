@@ -5,12 +5,16 @@ import com.chuwa.entity.OrderPrimaryKey;
 import com.chuwa.po.Address;
 import com.chuwa.po.OrderStatusEnum;
 import com.chuwa.po.Payment;
+import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
 
 
 //import org.springframework.data.jpa.repository.Modifying;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 
@@ -26,22 +30,25 @@ public interface OrderRepository extends CassandraRepository<Order, OrderPrimary
 //    @Query("SELECT * FROM orders WHERE customer_id = ?0 AND order_date = ?1 ORDER BY order_time DESC LIMIT 1")
 //    Optional<Order> findLatestOrder(UUID customerId, LocalDate orderDate);
 
-//    @Modifying
+    //    @Modifying
     @Query("UPDATE orders SET address = ?2, version = version + 1 WHERE order_id = ?0 AND created_date = ?1 AND timestamp = ?3 IF version = ?4 AND status = 'CREATED'")
     ResultSet updateAddressIfVersionMatches(UUID orderId, LocalDate orderDate, Address newAddress, Date timestamp, int expectedVersion);
 
-//    @Modifying
+    //    @Modifying
     @Query("UPDATE orders SET payment = ?2, version = version + 1 WHERE order_id = ?0 AND created_date = ?1 AND timestamp = ?3 IF version = ?4 AND status = 'CREATED'")
     ResultSet updatePaymentIfVersionMatches(UUID orderId, LocalDate orderDate, Payment newPayment,Date timestamp, int expectedVersion);
 
-//    @Modifying
+    //    @Modifying
     @Query("UPDATE orders SET status = ?2, version = version + 1 WHERE order_id = ?0 AND created_date = ?1  AND timestamp = ?3 IF version = ?4")
     ResultSet updateStatusIfVersionMatches(UUID orderId, LocalDate orderDate, OrderStatusEnum newOrderStatusEnum, Date timestamp,int expectedVersion);
 
     @Query("SELECT * FROM orders WHERE order_id = ?0 ALLOW FILTERING")
     Optional<Order> findBySearchId(UUID orderId);
 
+//    @Query("SELECT * FROM orders WHERE customer_id = ?0 ALLOW FILTERING")
+//    Optional<List<Order>> findByCustomerId(UUID orderId);
+
     @Query("SELECT * FROM orders WHERE customer_id = ?0 ALLOW FILTERING")
-    Optional<List<Order>> findByCustomerId(UUID orderId);
+    Slice<Order> findByCustomerId(UUID orderId, CassandraPageRequest pageable);
 }
 

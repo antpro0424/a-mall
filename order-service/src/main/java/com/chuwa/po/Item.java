@@ -17,23 +17,23 @@ import java.util.UUID;
 @UserDefinedType("item")
 public class Item {
 
-    @CassandraType(type = CassandraType.Name.UUID)
-    private UUID itemId;
+    @CassandraType(type = CassandraType.Name.TEXT)
+    private String id;
 
     @CassandraType(type = CassandraType.Name.TEXT)
-    private String itemName;
+    private String name;
 
     @CassandraType(type = CassandraType.Name.DOUBLE)
     private double unitPrice;
 
     @CassandraType(type = CassandraType.Name.INT)
-    private double quantity;
+    private int availableUnits;
 
     @CassandraType(type = CassandraType.Name.TEXT)
-    private String currency; // USD, RMD
+    private String upc; // USD, RMD
 
     @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.TEXT)
-    private List<String> picList;
+    private List<String> pictureUrls;
 
 }
 

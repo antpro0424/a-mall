@@ -7,13 +7,20 @@ import com.chuwa.po.Address;
 import com.chuwa.po.OrderStatusEnum;
 import com.chuwa.po.Payment;
 import com.chuwa.po.UpdateStatus;
+import com.chuwa.service.CronService;
 import com.chuwa.service.OrderService;
+import com.chuwa.util.Feign.ItemService;
+import com.chuwa.util.Feign.KafkaClient;
+import com.chuwa.util.Feign.KafkaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,21 +31,31 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    private final ItemService itemService;
+
+
+    private final KafkaService kafkaService;
+
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, ItemService itemService, KafkaService kafkaService) {
         this.orderService = orderService;
+
+        this.itemService = itemService;
+        this.kafkaService = kafkaService;
     }
 
     @PostMapping
 
+
+    @Transactional
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         try {
             // create key
             UUID orderId = UUID.randomUUID();
 //            orderId = UUID.fromString("991528c2-e5eb-41d1-93a9-5af5b0cc6b54");
             LocalDate createdDate = LocalDate.now();
+//            LocalTime timestamp = LocalTime.now();
             Date timestamp = new Date();
-
             order.setKey(new OrderPrimaryKey());
             order.getKey().setCreatedDate(createdDate);
             order.getKey().setTimestamp(timestamp);
@@ -59,6 +76,8 @@ public class OrderController {
             Order rtnOrder = orderService.createOrder(order);
 //            System.out.println(rtnOrder.getKey().getTimestamp());
 
+            System.out.println(itemService.fetchItem("66bd47875448cd4481225ccc"));
+            kafkaService.sendMessage(rtnOrder.getKey().getOrderId().toString(), rtnOrder);
 
             return new ResponseEntity<>(rtnOrder, HttpStatus.OK);
         } catch (Exception e) {

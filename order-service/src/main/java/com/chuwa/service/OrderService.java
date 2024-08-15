@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,12 +50,6 @@ public class OrderService {
 
     }
 
-//    public List<Order> findByCustomerId(UUID orderId) {
-//        Optional<List<Order>> order = orderRepository.findByCustomerId(orderId);
-//        return order.orElse(null);
-//
-//    }
-
 
 
     public Order findOrderByKey(OrderPrimaryKey key) {
@@ -67,7 +62,6 @@ public class OrderService {
      * update Item-service
      * Payment Service
      * */
-
     public String cancelOrder(OrderPrimaryKey key) {
 
 //        Order findOrder = orderRepository.findLatestOrder(order.getOrderId(), order.getKey().getOrderDate()).orElseThrow(() -> new RuntimeException("Order not found"));
@@ -153,7 +147,6 @@ public class OrderService {
 
     // Pagination
     public Slice<Order> getPageOfOrders(UUID userId, int page, int size, String pagingState) {
-//        Pageable pageable = Pageable.ofSize(size);
 
         if (pagingState == null)
             page = 0;
@@ -164,6 +157,8 @@ public class OrderService {
         CassandraPageRequest pageRequest = CassandraPageRequest.of(pageable, PagingState.fromString(pagingState).getRawPagingState());
         return orderRepository.findByCustomerId(userId, pageable);
     }
+
+
 
 }
 

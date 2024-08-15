@@ -10,6 +10,6 @@ spring:
     keyspace-name: order_keyspace
     contact-points: 127.0.0.1
     port: 9042
-#    schema-action: recreate
-    schema-action: create_if_not_exists
+    schema-action: recreate
+#    schema-action: create_if_not_exists
     local-datacenter: datacenter1

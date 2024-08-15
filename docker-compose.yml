@@ -1,4 +1,4 @@
-version: '0'
+version: '3.8'
 
 services:
   cassandra:
@@ -11,16 +11,17 @@ services:
       - CASSANDRA_PASSWORD=admin
     volumes:
       - cassandra-data:/var/lib/cassandra
+    restart: always
 
   cassandra-load-keyspace:
     image: cassandra:latest
     container_name: cassandra-load-keyspace
     depends_on:
       - cassandra
-
     volumes:
       - ./init-scripts/init-cassandra.cql:/init-cassandra.cql
-    command: /bin/bash -c "sleep 100 && echo loading cassandra keyspace && cqlsh cassandra -f /init-cassandra.cql"
+    command: /bin/bash -c "sleep 30 && echo loading cassandra keyspace && cqlsh cassandra -f /init-cassandra.cql"
+    restart: on-failure
 
   mysql:
     image: mysql:latest
@@ -31,9 +32,69 @@ services:
     ports:
       - "13306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql  # Volume for data persistence
-    restart: always  # Restart policy
+      - mysql-data:/var/lib/mysql
+    depends_on:
+      - cassandra-load-keyspace
+    restart: always
+
+  item-service:
+    image: a-mall/item-service:1.0-SNAPSHOT
+    container_name: item-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - cassandra
+      - mysql
+      - cassandra-load-keyspace
+
+  order-service:
+    image: a-mall/order-service:1.0-SNAPSHOT
+    container_name: order-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - cassandra
+      - mysql
+      - cassandra-load-keyspace
+      - item-service
+    restart: always
+
+
+
+  eureka-server:
+    image: a-mall/eureka-server:1.0-SNAPSHOT
+    container_name: eureka-service
+    ports:
+      - "8761:8761"
+    depends_on:
+      - mysql
+      - cassandra
+      - cassandra-load-keyspace
+
+#  account-service:
+#    image: a-mall/account-service:1.0-SNAPSHOT
+#    container_name: account-service
+#    ports:
+#      - "8084:8080"
+#    depends_on:
+#      - mysql
+#      - eureka-server
+#      - cassandra-load-keyspace
+
 
 volumes:
   cassandra-data:
   mysql-data:
+
+
+
+
+
+
+
+
+
+
+
+
+

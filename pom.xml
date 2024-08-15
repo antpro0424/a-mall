@@ -51,27 +51,55 @@
     </dependency>
 
   </dependencies>
+    <!-- docker build check this out : https://github.com/macrozheng/mall/blob/master/pom.xml -->
   <build>
     <plugins>
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.12</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.40.2</version>
         <executions>
           <execution>
+            <id>build-images</id>
+            <phase>package</phase>
             <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>report</goal>
+              <goal>build</goal>
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <images>
+
+
+            <!-- all service image -->
+            <image>
+              <name>a-mall/${project.name}:${project.version}</name>
+              <build>
+                <!-- 这个project basedir 很坑 返回的是你当前运行的pom地址  -->
+                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                <!-- 目录也是 如果用${project.basedir}/item-service 会出错  不要在父pom 运行 用子pom package-->
+                <contextDir>${project.basedir}</contextDir>
+                <tags>
+                  <tag>latest</tag>
+                </tags>
+              </build>
+            </image>
+
+
+
+          </images>
+
+
+        </configuration>
       </plugin>
     </plugins>
   </build>
+
+
+
+
 </project>

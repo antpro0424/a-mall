@@ -5,8 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-@Schema(description = "login form entity")
-public class LoginFormDTO {
+@Schema(description = "sign up form class")
+public class SignupFormDTO {
+
     @Schema(description = "username")
     @NotNull(message = "username is required")
     private String username;
@@ -15,6 +16,7 @@ public class LoginFormDTO {
     @NotNull(message = "password is required")
     private String password;
 
-    @Schema(description = "remember me")
-    private Boolean rememberMe = false;
+    @Schema(description = "phone number")
+    @NotNull(message = "phone number is required")
+    private String phone;
 }

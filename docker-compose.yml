@@ -1,7 +1,29 @@
 version: '0'
 
 services:
+  zookeeper:
+    image: zookeeper:3.7
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+      ZOO_SERVERS: server.1=zookeeper:2888:3888
 
+  kafka:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
 #  app-order-service:
 #    depends_on:
 #      - cassandra
@@ -12,25 +34,24 @@ services:
 #    ports:
 #      - '8084:8084'
 #    volumes:
-#      - .m2:/root/.m2
+#      - ~/.m2:/root/.m2
 #    stdin_open: true
 #    tty: true
 
 
 
-#    web:
-#      stdin_open: true
-#      environment:
-#        - CHOKIDAR_USEPOLLING=true
-#      build:
-#        context: ./react
-#        dockerfile: Dockerfile.dev
-#      ports:
-#        - '3000:3000'
-#      volumes:
-#        - /app/node_modules
-#        - ./react:/app
-
+  #  web:
+  #    stdin_open: true
+  #    environment:
+  #      - CHOKIDAR_USEPOLLING=true
+  #    build:
+  #      context: ./react
+  #      dockerfile: Dockerfile.dev
+  #    ports:
+  #      - '3000:3000'
+  #    volumes:
+  #      - /app/node_modules
+  #      - ./react:/app
 
   cassandra:
     image: cassandra:latest

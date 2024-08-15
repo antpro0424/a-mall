@@ -1,5 +1,6 @@
-package com.chuwa.po;
+package com.chuwa.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,39 +17,37 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@UserDefinedType("payment")
-public class Payment {
 
-    @CassandraType(type = CassandraType.Name.UUID)
+public class PaymentDTO {
+
+
     private UUID orderId;
 
-    @CassandraType(type = CassandraType.Name.DATE)
-    private LocalDate createdDate; // PAYMENT SERVICE UPDATE
 
-//    @CassandraType(type = CassandraType.Name.UUID)
-//    private UUID paymentId;
-    @CassandraType(type = CassandraType.Name.TIMESTAMP)
+    private LocalDate createdDate;
+
+
     private Date timestamp;
 
-    @CassandraType(type = CassandraType.Name.TEXT)
+
     private String paymentType; // VISA, MASTER, ...
 
-    @CassandraType(type = CassandraType.Name.TEXT)
+
     private String paymentDetails; // card number, cvv, etc.
 
-    @CassandraType(type = CassandraType.Name.TEXT)
+
     private String paymentStatus; // CREATED, PAID, CANCELLED, PENDING
 
-    @CassandraType(type = CassandraType.Name.TIMESTAMP)
+
     private Date paymentTime; // PAYMENT SERVICE UPDATE
 
-    @CassandraType(type = CassandraType.Name.TIMESTAMP)
+
     private Date sendTime; // time sent to Kafka
 
-    @CassandraType(type = CassandraType.Name.DOUBLE)
+
     private Double paymentAmount;
 
-    @CassandraType(type = CassandraType.Name.TEXT)
+
     private String paymentCurrency; // Currency type like USD, RMB, etc.
 }
 

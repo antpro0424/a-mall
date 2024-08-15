@@ -1,6 +1,8 @@
 package com.chuwa.entity;
 
+import com.chuwa.po.Address;
 import com.chuwa.po.Item;
+import com.chuwa.po.OrderStatusEnum;
 import com.chuwa.po.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,21 +24,33 @@ public class Order {
     @PrimaryKey
     private OrderPrimaryKey key;
 
+    @Column("search_id")
+    private UUID searchId; // for findByOrderId
+
+    @Column("customer_id")
+    private UUID customerId;
+
     @Column("total_amount")
     private double totalAmount;
+
+//    @Column("order_time")
+//    private Date orderTime;
 
     @Column("items")
     private Map<UUID, Item> items; // item_id to quantity
 
+
+    @Column("status")
+    private OrderStatusEnum orderStatus;
+
+    @Column("address")
+    private Address address;
+
     @Column("payment")
     private Payment payment;
 
-    @Column("order_status")
-    private String orderStatus;
-
-    @Column("order_time")
-    private Date orderTime;
-
+    @Column("version")
+    private int version;
 
 
 }

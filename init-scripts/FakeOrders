@@ -1,10 +1,6 @@
 POST http://localhost:8084/v1/orders
 {
-  "key": {
-    "customerId": "e87db649-461f-43f5-8bf3-56bfefd63b3c",
-    "orderDate": "2024-08-15",
-    "orderId": "8f538b69-9b94-4464-b4b5-1278d8515d42"
-  },
+  "customerId": "8f538b69-9b94-4464-b4b5-1278d8515d4d",
   "totalAmount": 150.75,
   "items": {
     "3c5d7aa7-931f-42bd-8214-c3b24a7a7e14": {
@@ -24,14 +20,17 @@ POST http://localhost:8084/v1/orders
         "picList":[]
     }
   },
+
   "payment":{
-    "orderId":"8f538b69-9b94-4464-b4b5-1278d8515d42",
-    "paymentId": "faef7b3e-d08d-4561-bad3-60c47c3afe15",
     "paymentType":"VISA",
     "paymentDetails": "here is the encrypt info",
     "paymentStatus": "CREATED",
     "paymentAmount": 150.75,
     "paymentCurrency": "USD"
   },
-  "orderStatus": "Order Created"
+  "address": {
+    "zipCode":"95050",
+    "detailAddress":"2855 Stevens Creek Blvd, Santa Clara, CA"
+  }
+
 }

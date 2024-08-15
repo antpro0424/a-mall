@@ -6,17 +6,22 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.bytebuddy.implementation.bytecode.constant.DefaultValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
 @Api(tags = "Item service")
 @RestController
-@RequestMapping("/items")
+@RequestMapping("/api/v0/items")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ItemController {
 
     private final ItemService itemService;
@@ -54,8 +59,9 @@ public class ItemController {
             @ApiResponse(code = 200, message = "List of items retrieved")
     })
     @GetMapping
-    public ResponseEntity<List<Item>> getAllItems() {
-        List<Item> items = itemService.getAllItems();
+    public ResponseEntity<Page<Item>> getAllItems(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size) {
+        Page<Item> items = itemService.getAllItems(page,size);
         return ResponseEntity.ok(items);
     }
 
@@ -77,8 +83,11 @@ public class ItemController {
             @ApiResponse(code = 400, message = "Invalid name parameter")
     })
     @GetMapping("/search")
-    public ResponseEntity<List<Item>> findItemsByName(@RequestParam String name) {
-        List<Item> items = itemService.findItemsByName(name);
+    public ResponseEntity<Page<Item>> findItemsByName(@RequestParam String name,
+                                                        @RequestParam(defaultValue="0") int page,
+                                                        @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Item> items = itemService.findItemsByName(name,pageable);
         return ResponseEntity.ok(items);
     }
 }

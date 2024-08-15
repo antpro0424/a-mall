@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
 
     private final OrderService orderService;
@@ -29,6 +30,7 @@ public class OrderController {
     }
 
     @PostMapping
+
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         try {
             // create key
@@ -55,7 +57,7 @@ public class OrderController {
 
             order.setOrderStatus(OrderStatusEnum.CREATED);
             Order rtnOrder = orderService.createOrder(order);
-            System.out.println(rtnOrder.getKey().getTimestamp());
+//            System.out.println(rtnOrder.getKey().getTimestamp());
 
 
             return new ResponseEntity<>(rtnOrder, HttpStatus.OK);
@@ -141,7 +143,7 @@ public class OrderController {
     public ResponseEntity<Order> getOrder(@PathVariable UUID orderId) {
         try {
 
-           return new ResponseEntity<>(orderService.findOrderByOrderId(orderId), HttpStatus.OK);
+            return new ResponseEntity<>(orderService.findOrderByOrderId(orderId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

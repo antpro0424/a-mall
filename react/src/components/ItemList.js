@@ -7,7 +7,7 @@ const ItemList = ({ addToCart }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8083/items')
+    axios.get('http://localhost:8083/api/v0/items')
       .then(response => {
         // console.log(response.data.content);
         setItems(response.data.content);

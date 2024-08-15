@@ -20,15 +20,15 @@ spring:
         - id: account-service
           uri: lb://account-service
           predicates:
-            - Path=/accounts/**
+            - Path=/api/v0/accounts/**
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/orders/**
+            - Path=/api/v0/orders/**
         - id: item-service
           uri: lb://item-service
           predicates:
-            - Path=/items/**
+            - Path=/api/v0/items/**
 
 amall:
   jwt:
@@ -39,5 +39,5 @@ amall:
   auth:
     excludePaths:
 #      - /api/v0/search/**
-      - /accounts/user/login
-      - /accounts/user/signup
+      - /api/v0/accounts/user/login
+      - /api/v0/accounts/user/signup

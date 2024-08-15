@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v0/orders")
 public class OrderController {
 
     private final OrderService orderService;

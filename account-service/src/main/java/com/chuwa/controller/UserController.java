@@ -1,8 +1,10 @@
 package com.chuwa.controller;
 
 import com.chuwa.dto.LoginFormDTO;
+import com.chuwa.dto.SignupFormDTO;
 import com.chuwa.service.UserService;
 import com.chuwa.vo.UserLoginVO;
+import com.chuwa.vo.UserSignupVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,4 +25,8 @@ public class UserController {
     public UserLoginVO userLogin(@RequestBody LoginFormDTO loginFormDTO) {
         return userService.login(loginFormDTO);
     }
+
+    @Operation(summary = "user signup api")
+    @PostMapping("/signup")
+    public UserSignupVO signup(@RequestBody SignupFormDTO signupFormDTO) {return userService.signup(signupFormDTO);}
 }

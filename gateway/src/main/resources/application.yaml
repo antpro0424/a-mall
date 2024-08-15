@@ -36,4 +36,4 @@ amall:
     excludePaths:
 #      - /api/v0/search/**
       - /api/v0/account/user/login
-      - /api/v0/hi/
+      - /api/v0/account/user/signup

@@ -1,0 +1,13 @@
+server:
+  port:
+    8084
+
+spring:
+  cassandra:
+    keyspace-name=order_keyspace
+    contact-points=127.0.0.1
+    port=9042
+    schema-action=recreate
+    local-datacenter=datacenter1
+    username=admin
+    password=admin

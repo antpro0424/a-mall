@@ -1,14 +1,15 @@
 package com.chuwa.controller;
 
+import com.chuwa.exception.BadRequestException;
 import com.chuwa.po.Address;
 import com.chuwa.service.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,16 +22,31 @@ public class AddressController {
 
     @Operation(summary = "Get address by address id")
     @GetMapping("{addressId}")
-    public Address getAddressById(@PathVariable("addressId") Long addressId) {
+    public Address getAddressById(@PathVariable("addressId") Long addressId, @RequestHeader(value="user-info", required = false) String userInfo) {
         Address address = addressService.getAddressById(addressId);
-//        TODO: After finishing login and save the user info to ApplicationContext, validate if current userid matches the userid of this address
+
+        Long userId = Long.valueOf(userInfo);
+        if (!address.getUserId().equals(userId)) {
+            throw new BadRequestException("Address does not belong to user.");
+        }
         return address;
     }
 
     // TODO: Other APIs, like find all addresses according to the userId.
-    @Operation
+    @Operation(summary = "Get all addresses of current user")
     @GetMapping
-    public List<Address> getAddresses() {
-        return null;
+    public Page<Address> findMyAddresses(
+            @RequestHeader(value = "user-info", required = false) String userInfo,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Long userId = Long.valueOf(userInfo);
+        Pageable pageable = PageRequest.of(page, size);
+        return addressService.findAddressesByUserId(userId, pageable);
     }
+
+//    @Operation(summary = "Add an address of current user")
+//    @PostMapping
+//    public
+    
 }

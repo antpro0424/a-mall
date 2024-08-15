@@ -4,6 +4,8 @@ import com.chuwa.po.Address;
 import com.chuwa.repository.AddressRepository;
 import com.chuwa.service.AddressService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,5 +16,9 @@ public class AddressServiceImpl implements AddressService {
     public Address getAddressById(Long addressId) {
         return addressRepository.findById(addressId)
                 .orElseThrow(() -> new RuntimeException("Address not found with id: " + addressId));
+    }
+
+    public Page<Address> findAddressesByUserId(Long userId, Pageable pageable) {
+        return addressRepository.findByUserId(userId, pageable);
     }
 }

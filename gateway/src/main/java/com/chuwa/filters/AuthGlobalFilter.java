@@ -46,9 +46,9 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // 4. 校验并解析token
-        String username = null;
+        Long userId;
         try {
-            username = jwtTool.parseToken(token);
+            userId = jwtTool.parseToken(token);
         }
         catch (UnauthorizedException e) {
             // 拦截，设置响应状态码401
@@ -58,10 +58,14 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // TODO: 5.传递用户信息
-        System.out.println("Username" + username);
+        System.out.println("User ID:" + userId);
+        String userInfo = userId.toString();
+        ServerWebExchange swe = exchange.mutate()
+                .request(builder -> builder.header("user-info", userInfo))
+                .build();
 
         // 6. 放行
-        return chain.filter(exchange);
+        return chain.filter(swe);
     }
 
     private boolean isExclude(String path) {

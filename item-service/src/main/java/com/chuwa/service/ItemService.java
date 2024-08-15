@@ -2,6 +2,7 @@ package com.chuwa.service;
 
 import com.chuwa.domain.po.Item;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,6 @@ public interface ItemService {
 
     void deleteItemById(String id);
 
-    List<Item> findItemsByName(String name);
+    Page<Item> findItemsByName(String name, Pageable pageable);
 
 }

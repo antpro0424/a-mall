@@ -8,4 +8,4 @@ spring:
     active: dev
   data:
     mongodb:
-      uri:
+      uri: mongodb+srv://FinalProject:test1234@cluster0.mxi8i1m.mongodb.net/OnlineShopping

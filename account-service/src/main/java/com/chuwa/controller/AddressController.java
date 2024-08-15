@@ -1,6 +1,5 @@
 package com.chuwa.controller;
 
-import com.chuwa.dto.SignupFormDTO;
 import com.chuwa.exception.BadRequestException;
 import com.chuwa.po.Address;
 import com.chuwa.service.AddressService;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name="Address Controller", description = "APIs for operating user's addresses.")
 @RestController

@@ -37,7 +37,7 @@ public class Order {
 //    private Date orderTime;
 
     @Column("items")
-    private Map<UUID, Item> items; // item_id to quantity
+    private Map<String, Item> items; // item_id to quantity
 
 
     @Column("status")

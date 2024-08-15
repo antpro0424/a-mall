@@ -9,13 +9,23 @@ const ItemList = ({ addToCart }) => {
   useEffect(() => {
     axios.get('http://localhost:8083/items')
       .then(response => {
-        setItems(response.data);
-        // console.log(response.data);
+        // console.log(response.data.content);
+        setItems(response.data.content);
+
       })
       .catch(error => console.error('Error fetching items:', error));
   }, []);
 
-
+  // useEffect(() => {
+  //   const mockData = [
+  //     { id: 1, name: 'Apple', unitPrice: 1.5 },
+  //     { id: 2, name: 'Banana', unitPrice: 1.2 },
+  //     { id: 3, name: 'Orange', unitPrice: 2.0 },
+  //     { id: 4, name: 'Mango', unitPrice: 2.5 },
+  //   ];
+  //
+  //   setItems(mockData);
+  // }, []);
 
   return (
 

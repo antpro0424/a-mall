@@ -49,6 +49,6 @@ public interface OrderRepository extends CassandraRepository<Order, OrderPrimary
 //    Optional<List<Order>> findByCustomerId(UUID orderId);
 
     @Query("SELECT * FROM orders WHERE customer_id = ?0 ALLOW FILTERING")
-    Slice<Order> findByCustomerId(UUID orderId, CassandraPageRequest pageable);
+    Slice<Order> findByCustomerId(UUID orderId, Pageable pageable);
 }
 

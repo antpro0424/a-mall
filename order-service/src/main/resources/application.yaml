@@ -13,3 +13,11 @@ spring:
 #    schema-action: recreate
     schema-action: create_if_not_exists
     local-datacenter: datacenter1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Eureka Server 的地址
+  instance:
+    ip-address: localhost
+    prefer-ip-address: true  # 使用 IP 地址而不是主机名注册

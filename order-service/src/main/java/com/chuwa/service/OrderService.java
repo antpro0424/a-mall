@@ -1,20 +1,31 @@
 package com.chuwa.service;
 
+import com.chuwa.DTO.CassandraPage;
+import com.chuwa.DTO.Paginated;
 import com.chuwa.entity.OrderPrimaryKey;
 import com.chuwa.po.Address;
 import com.chuwa.po.OrderStatusEnum;
 import com.chuwa.po.Payment;
 import com.chuwa.repository.OrderRepository;
 import com.chuwa.entity.Order;
+import com.datastax.oss.driver.api.core.cql.PagingState;
 import com.datastax.oss.driver.api.core.cql.Row;
+import jakarta.annotation.Nullable;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.cassandra.core.query.CassandraPageRequest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 
 import com.datastax.oss.driver.api.core.cql.ResultSet;
+
+import java.nio.ByteBuffer;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,12 +40,12 @@ public class OrderService {
     }
 
     /*
-    * To do
-    * check Item-service, make sure inventory are valid and decrease inventory
-    * */
+     * To do
+     * check Item-service, make sure inventory are valid and decrease inventory
+     * */
 
     public Order createOrder(Order order) {
-            return orderRepository.save(order);
+        return orderRepository.save(order);
     }
 
     public Order findOrderByOrderId(UUID orderId) {
@@ -43,11 +54,13 @@ public class OrderService {
 
     }
 
-    public List<Order> findByCustomerId(UUID orderId) {
-        Optional<List<Order>> order = orderRepository.findByCustomerId(orderId);
-        return order.orElse(null);
+//    public List<Order> findByCustomerId(UUID orderId) {
+//        Optional<List<Order>> order = orderRepository.findByCustomerId(orderId);
+//        return order.orElse(null);
+//
+//    }
 
-    }
+
 
     public Order findOrderByKey(OrderPrimaryKey key) {
         return orderRepository.findById(key).orElseThrow(() -> new RuntimeException("Order not found"));
@@ -55,10 +68,10 @@ public class OrderService {
 
 
     /*
-    * To do
-    * update Item-service
-    * Payment Service
-    * */
+     * To do
+     * update Item-service
+     * Payment Service
+     * */
 
     public String cancelOrder(OrderPrimaryKey key) {
 
@@ -143,6 +156,51 @@ public class OrderService {
     }
 
 
+    // Pagination
+    public CassandraPage<Order> getPageOfOrders(UUID userId, final Paginated paginated) {
+        return getPageOfOrders(userId, paginated.getLimit(), paginated.getPagingState().orElse(null));
+    }
+
+    public CassandraPage<Order> getPageOfOrders(UUID userId,final Integer limit) {
+        return getPageOfOrders(userId,limit, null);
+    }
+
+    public CassandraPage<Order> getPageOfOrders(UUID userId,final Integer limit, final String pagingState) {
+        val pageRequest = createCassandraPageRequest(limit, pagingState);
+        return getPageOfOrders(userId,pageRequest);
+    }
+
+    public CassandraPage<Order> getPageOfOrders(UUID userId,final CassandraPageRequest cassandraPageRequest) {
+        val userSlice = orderRepository.findByCustomerId(userId, cassandraPageRequest);
+        return new CassandraPage<>(userSlice);
+    }
+
+    private CassandraPageRequest createCassandraPageRequest(final Integer limit, @Nullable final String pagingState) {
+        System.out.println(limit);
+        val pageRequest = PageRequest.of(0, limit);
+        val pageState = pagingState != null ? PagingState.fromString(pagingState) : null;
+        if (pageState== null)
+            return CassandraPageRequest.of(0,limit);
+        return CassandraPageRequest.of(pageRequest, pageState.getRawPagingState());
+    }
+
+
+//    public Slice<Order> findByCustomerId(UUID userId, int page, int size, String pagingState) {
+//        CassandraPageRequest pageRequest = createCassandraPageRequest(size, pagingState);
+////        PageRequest pageRequest = PageRequest.of(page, size);
+//        return orderRepository.findByCustomerId(userId,pageRequest);
+//
+//
+//    }
+//    private CassandraPageRequest createCassandraPageRequest(final Integer size, @Nullable final String pagingState) {
+//        PageRequest pageRequest = PageRequest.of(0, size);
+//        PagingState pageState = pagingState != null ? PagingState.fromString(pagingState) : null;
+//        if (pageState != null)
+//            return CassandraPageRequest.of(pageRequest, pageState.getRawPagingState());
+//        else
+//            return CassandraPageRequest.of(0, size);
+//
+//    }
 
 }
 

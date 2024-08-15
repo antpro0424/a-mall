@@ -1,6 +1,5 @@
 package com.chuwa.controller;
 
-import com.chuwa.dto.SignupFormDTO;
 import com.chuwa.exception.BadRequestException;
 import com.chuwa.po.Address;
 import com.chuwa.service.AddressService;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name="Address Controller", description = "APIs for operating user's addresses.")
 @RestController
@@ -47,11 +44,17 @@ public class AddressController {
         return addressService.findAddressesByUserId(userId, pageable);
     }
 
-//    @Operation(summary = "Add an address of current user")
-//    @PostMapping
-//    public Address addAddress(@RequestBody Address address) {
-//        return addressService.addAddress();
-//    }
+    @Operation(summary = "Add an address of current user")
+    @PostMapping
+    public Address addAddress(@RequestBody Address address) {
+        address.setUserId(UserContext.getUser());
+        return addressService.addAddress(address);
+    }
 
+//    @Operation(summary = "update address information")
+//    @PostMapping("/update")
+//    public Address updateAddress(@RequestBody Address address) {
+//        return addressService.updateAddress(address);
+//    }
     
 }

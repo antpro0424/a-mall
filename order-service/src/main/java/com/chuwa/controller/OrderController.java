@@ -3,10 +3,7 @@ package com.chuwa.controller;
 import com.chuwa.DTO.PaymentDTO;
 import com.chuwa.entity.Order;
 import com.chuwa.entity.OrderPrimaryKey;
-import com.chuwa.po.Address;
-import com.chuwa.po.OrderStatusEnum;
-import com.chuwa.po.Payment;
-import com.chuwa.po.UpdateStatus;
+import com.chuwa.po.*;
 import com.chuwa.service.CronService;
 import com.chuwa.service.OrderService;
 import com.chuwa.util.Feign.ItemService;
@@ -22,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -76,7 +75,18 @@ public class OrderController {
             Order rtnOrder = orderService.createOrder(order);
 //            System.out.println(rtnOrder.getKey().getTimestamp());
 
-            System.out.println(itemService.fetchItem("66bd47875448cd4481225ccc"));
+//            System.out.println(itemService.fetchItem("66bd47875448cd4481225ccc"));
+            Map<String, Item> itemList = order.getItems();
+            for (Item item : itemList.values()) {
+                Item fetchedItem = itemService.fetchItem(item.getId());
+//                System.out.println(fetchedItem);
+                int available = fetchedItem.getAvailableUnits();
+                if (item.getQuantity() > available) {
+                    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                }
+                // suppose should use batch process to update item inventory
+            }
+
             kafkaService.sendMessage(rtnOrder.getKey().getOrderId().toString(), rtnOrder);
 
             return new ResponseEntity<>(rtnOrder, HttpStatus.OK);

@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,10 +41,10 @@ public class Payment {
     private String paymentStatus; // CREATED, PAID, CANCELLED, PENDING
 
     @CassandraType(type = CassandraType.Name.TIMESTAMP)
-    private Date paymentTime; // PAYMENT SERVICE UPDATE
+    private LocalTime paymentTime; // PAYMENT SERVICE UPDATE
 
     @CassandraType(type = CassandraType.Name.TIMESTAMP)
-    private Date sendTime; // time sent to Kafka
+    private LocalTime sendTime; // time sent to Kafka
 
     @CassandraType(type = CassandraType.Name.DOUBLE)
     private Double paymentAmount;

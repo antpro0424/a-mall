@@ -1,6 +1,7 @@
 version: '0'
 
 services:
+
 #  app-order-service:
 #    depends_on:
 #      - cassandra
@@ -29,6 +30,7 @@ services:
     volumes:
       - /app/node_modules
       - ./react:/app
+
 
   cassandra:
     image: cassandra:latest

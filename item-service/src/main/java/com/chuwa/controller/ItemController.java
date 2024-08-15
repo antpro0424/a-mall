@@ -20,8 +20,7 @@ import java.util.Optional;
 
 @Api(tags = "Item service")
 @RestController
-@RequestMapping("/items")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/v0/items")
 public class ItemController {
 
     private final ItemService itemService;

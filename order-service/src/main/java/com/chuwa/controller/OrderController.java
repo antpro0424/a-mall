@@ -67,6 +67,11 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/hi")
+    public String hi() {
+        return "hi";
+    }
+
     @PutMapping
     public ResponseEntity<String> cancelOrder(@RequestBody OrderPrimaryKey key) {
         try {

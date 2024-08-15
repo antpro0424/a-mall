@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name="Address Controller", description = "APIs for operating user's addresses.")
 @RestController
-@RequestMapping("/api/v0/account/address")
+@RequestMapping("/api/v0/accounts/address")
 public class AddressController {
     @Autowired
     AddressService addressService;

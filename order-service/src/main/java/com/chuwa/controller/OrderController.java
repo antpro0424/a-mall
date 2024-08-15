@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v0/order/orders")
+@RequestMapping("/api/v0/orders")
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
 

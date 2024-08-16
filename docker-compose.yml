@@ -1,4 +1,4 @@
-version: '0'
+#version: '0'
 
 services:
 #  zookeeper:
@@ -78,18 +78,31 @@ services:
       - ./init-scripts/init-cassandra.cql:/init-cassandra.cql
     command: /bin/bash -c "sleep 100 && echo loading cassandra keyspace && cqlsh cassandra -f /init-cassandra.cql"
 
-  mysql:
+  account-mysql:
     image: mysql:latest
-    container_name: mysql-container
+    container_name: account-mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: "0424"
       MYSQL_DATABASE: amall
     ports:
       - "13306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql  # Volume for data persistence
+      - account-mysql-data:/var/lib/mysql  # Volume for data persistence
+    restart: always  # Restart policy
+
+  cart-mysql:
+    image: mysql:latest
+    container_name: cart-mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: "0424"
+      MYSQL_DATABASE: amall
+    ports:
+      - "13307:3306"
+    volumes:
+      - cart-mysql-data:/var/lib/mysql  # Volume for data persistence
     restart: always  # Restart policy
 
 volumes:
   cassandra-data:
-  mysql-data:
+  account-mysql-data:
+  cart-mysql-data:

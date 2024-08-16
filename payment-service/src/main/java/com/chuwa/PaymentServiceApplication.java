@@ -5,13 +5,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * Hello world!
+ *
+ */
 
 @SpringBootApplication
 @EnableScheduling
 @EnableFeignClients
-public class OrderServiceApplication {
+public class PaymentServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OrderServiceApplication.class, args);
+        SpringApplication.run(PaymentServiceApplication.class, args);
     }
+
 }

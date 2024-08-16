@@ -107,7 +107,7 @@ public class WebUtils {
                 ).append("&");
             }
         }
-        return !buffer.isEmpty() ? buffer.substring(0, buffer.length() - 1) : StrUtil.EMPTY;
+        return buffer.length() > 0 ? buffer.substring(0, buffer.length() - 1) : StrUtil.EMPTY;
     }
 
     /**

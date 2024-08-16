@@ -39,7 +39,6 @@ public class Order {
     @Column("items")
     private Map<String, Item> items; // item_id to quantity
 
-
     @Column("status")
     private OrderStatusEnum orderStatus;
 

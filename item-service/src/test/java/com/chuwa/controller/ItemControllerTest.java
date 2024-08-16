@@ -57,7 +57,7 @@ public class ItemControllerTest {
         String itemJson = objectMapper.writeValueAsString(item);
 
 
-        String responseJson = mockMvc.perform(post("/api/v0/items")
+        String responseJson = mockMvc.perform(post("/v0/items")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(itemJson))
                 .andExpect(status().isOk())
@@ -84,14 +84,14 @@ public class ItemControllerTest {
         String itemId = "1";
 
 
-        mockMvc.perform(delete("/api/v0/items/{id}", itemId)
+        mockMvc.perform(delete("/v0/items/{id}", itemId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
 
         verify(itemService, times(1)).deleteItemById(itemId);
 
-        mockMvc.perform(get("/api/v0/items/{id}", itemId)
+        mockMvc.perform(get("/v0/items/{id}", itemId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 

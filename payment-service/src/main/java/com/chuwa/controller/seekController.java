@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v0/kafka")
+@RequestMapping("/v0/kafka")
 public class seekController {
     @Autowired
     private KafkaClient kafkaClient;

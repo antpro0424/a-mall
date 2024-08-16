@@ -24,53 +24,53 @@ import java.util.List;
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     private final AuthProperties authProperties;
+
     private final JwtTool jwtTool;
+
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
-        // 1. 获取用户信息 (Request对象)
+        // 1.获取Request
         ServerHttpRequest request = exchange.getRequest();
-
-        // 2. 根据请求路径判断是否需要登录校验
+        // 2.判断是否不需要拦截
         if (isExclude(request.getPath().toString())) {
+            // 无需拦截，直接放行
             return chain.filter(exchange);
         }
-
-        // 3. 获取token
+        // 3.获取请求头中的token
         String token = null;
-        List<String> headers = request.getHeaders().get("Authorization");
-        if (headers != null && !headers.isEmpty()) {
+        List<String> headers = request.getHeaders().get("authorization");
+        if (headers != null & !headers.isEmpty()) {
             token = headers.get(0);
         }
-
-        // 4. 校验并解析token
-        Long userId;
+        // 4.校验并解析token
+        Long userId = null;
         try {
             userId = jwtTool.parseToken(token);
-        }
-        catch (UnauthorizedException e) {
-            // 拦截，设置响应状态码401
+        } catch (UnauthorizedException e) {
             ServerHttpResponse response = exchange.getResponse();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
         }
 
-        // TODO: 5.传递用户信息
-        System.out.println("User ID:" + userId);
+        // 5.如果有效，传递用户信息
         String userInfo = userId.toString();
-        ServerWebExchange swe = exchange.mutate()
-                .request(builder -> builder.header("user-info", userInfo))
+        ServerWebExchange swe = exchange.mutate().request(builder -> builder.header("user-info", userInfo))
                 .build();
-
-        // 6. 放行
+        // 6.放行
         return chain.filter(swe);
     }
 
-    private boolean isExclude(String path) {
-        for (String pathPatter : authProperties.getExcludePaths()) {
-            if (antPathMatcher.match(pathPatter, path)) {
+    /**
+     * 是否放行路径
+     *
+     * @param string
+     * @return
+     */
+    private boolean isExclude(String string) {
+        for (String path : authProperties.getExcludePaths()) {
+            if (antPathMatcher.match(path, string)) {
                 return true;
             }
         }
@@ -82,3 +82,4 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         return 0;
     }
 }
+

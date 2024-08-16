@@ -29,6 +29,10 @@ spring:
           uri: lb://item-service
           predicates:
             - Path=/api/v0/items/**
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/v0/carts/**
 
 amall:
   jwt:

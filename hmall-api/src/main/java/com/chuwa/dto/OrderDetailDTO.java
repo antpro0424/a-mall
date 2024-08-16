@@ -7,7 +7,7 @@ import lombok.Data;
 @Schema(description = "order details")
 public class OrderDetailDTO {
     @Schema(description = "商品id")
-    private Long itemId;
+    private String itemId;
     @Schema(description = "商品购买数量")
     private Integer num;
 }

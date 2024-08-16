@@ -42,6 +42,10 @@ public interface OrderRepository extends CassandraRepository<Order, OrderPrimary
     @Query("UPDATE orders SET status = ?2, version = version + 1 WHERE order_id = ?0 AND created_date = ?1  AND timestamp = ?3 IF version = ?4")
     ResultSet updateStatusIfVersionMatches(UUID orderId, LocalDate orderDate, OrderStatusEnum newOrderStatusEnum, Date timestamp,int expectedVersion);
 
+    @Query("UPDATE orders SET status = ?4, version = version + 1 WHERE order_id = ?0 AND created_date = ?1  AND timestamp = ?3 AND status = $3 IF version = ?5")
+    ResultSet updateStatusIfVersionStatusMatches(UUID orderId, LocalDate orderDate,  Date timestamp, OrderStatusEnum oldOrderStatusEnum, OrderStatusEnum newOrderStatusEnum,int expectedVersion);
+
+
     @Query("SELECT * FROM orders WHERE order_id = ?0 ALLOW FILTERING")
     Optional<Order> findBySearchId(UUID orderId);
 
@@ -50,5 +54,9 @@ public interface OrderRepository extends CassandraRepository<Order, OrderPrimary
 
     @Query("SELECT * FROM orders WHERE customer_id = ?0 ALLOW FILTERING")
     Slice<Order> findByCustomerId(UUID orderId, Pageable pageable);
+
+    @Query("SELECT * FROM orders WHERE created_date >= :fromDate AND created_date <= :toDate ALLOW FILTERING")
+    List<Order> findAllByOrderDateBetween(Date fromDate, Date toDate);
+
 }
 

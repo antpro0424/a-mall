@@ -31,7 +31,7 @@ public class CartVO {
     private Double unitPrice;
 
     @Schema(description = "商品图片", example = "http://example.com/image.png")
-    private String pictureUrls;
+    private String pictureUrl;
 
     @Schema(description = "创建时间", example = "2023-05-05T12:30:00")
     private LocalDateTime createTime;

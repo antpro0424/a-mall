@@ -6,7 +6,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import net.bytebuddy.implementation.bytecode.constant.DefaultValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 import java.util.Optional;
 
 @Api(tags = "Item service")
@@ -58,6 +56,7 @@ public class ItemController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "List of items retrieved")
     })
+
     @GetMapping
     public ResponseEntity<Page<Item>> getAllItems(@RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "10") int size) {
@@ -70,6 +69,7 @@ public class ItemController {
             @ApiResponse(code = 204, message = "Item deleted successfully"),
             @ApiResponse(code = 404, message = "Item not found")
     })
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItemById(@PathVariable String id) {
 
@@ -82,6 +82,7 @@ public class ItemController {
             @ApiResponse(code = 200, message = "List of items matching the name"),
             @ApiResponse(code = 400, message = "Invalid name parameter")
     })
+
     @GetMapping("/search")
     public ResponseEntity<Page<Item>> findItemsByName(@RequestParam String name,
                                                         @RequestParam(defaultValue="0") int page,

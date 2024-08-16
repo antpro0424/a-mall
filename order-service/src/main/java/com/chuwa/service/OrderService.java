@@ -47,10 +47,7 @@ public class OrderService {
     public Order findOrderByOrderId(UUID orderId) {
         Optional<Order> order = orderRepository.findBySearchId(orderId);
         return order.orElse(null);
-
     }
-
-
 
     public Order findOrderByKey(OrderPrimaryKey key) {
         return orderRepository.findById(key).orElseThrow(() -> new RuntimeException("Order not found"));

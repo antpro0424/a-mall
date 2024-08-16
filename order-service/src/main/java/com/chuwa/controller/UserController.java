@@ -38,7 +38,7 @@ public class UserController {
                                   @RequestParam(required = false) String pagingState
     ) {
 
-        return orderService.getPageOfOrders( userId, page, size, pagingState);
+        return orderService.getPageOfOrders(userId, page, size, pagingState);
     }
 
 }

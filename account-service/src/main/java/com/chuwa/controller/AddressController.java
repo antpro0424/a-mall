@@ -33,7 +33,6 @@ public class AddressController {
         return address;
     }
 
-    // TODO: Other APIs, like find all addresses according to the userId.
     @Operation(summary = "Get all addresses of current user")
     @GetMapping
     public Page<Address> findMyAddresses(
@@ -57,5 +56,18 @@ public class AddressController {
 //    public Address updateAddress(@RequestBody Address address) {
 //        return addressService.updateAddress(address);
 //    }
-    
+    @Operation(summary = "Delete an address by address id")
+    @DeleteMapping("{addressId}")
+    public void deleteAddress(@PathVariable("addressId") Long addressId) {
+        Long userId = UserContext.getUser();
+        Address address = addressService.getAddressById(addressId);
+
+        if (!address.getUserId().equals(userId)) {
+            throw new BadRequestException("Address does not belong to user.");
+        }
+
+        addressService.deleteAddressById(addressId);
+    }
+
+
 }

@@ -3,30 +3,30 @@ server:
 
 spring:
   application:
-    name: account-service # 微服务名称
+    name: account-service
   profiles:
     active: dev
   datasource:
-    url: 'jdbc:mysql://localhost:13306/amall'
+    url: 'jdbc:mysql://mysql-container:3306/amall'
     username: root
     password: '0424'
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update  # 自动创建或更新表结构
-    show-sql: true      # 显示SQL语句
-    open-in-view: false
-    properties:
-      hibernate:
-        format_sql: true  # 格式化SQL输出
+      ddl-auto: update
+      show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
+          format_sql: true
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/  # Eureka Server 的地址
+      defaultZone: http://localhost:8761
   instance:
     ip-address: localhost
-    prefer-ip-address: true  # 使用 IP 地址而不是主机名注册
+    prefer-ip-address: true
 
 amall:
   jwt:

@@ -118,13 +118,18 @@ services:
     container_name: eureka-service
     ports:
       - "8761:8761"
-    depends_on:
-      - mysql
-      - cassandra
-      - cassandra-load-keyspace
-      - kafka
-      - zookeeper
 
+  account-service:
+    image: a-mall/account-service:1.0-SNAPSHOT
+    container_name: account-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+      - cassandra
+      - mysql
+      - cassandra-load-keyspace
+    restart: always
 
 volumes:
   cassandra-data:

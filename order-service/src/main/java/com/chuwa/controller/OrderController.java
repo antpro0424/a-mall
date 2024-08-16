@@ -9,6 +9,7 @@ import com.chuwa.service.OrderService;
 import com.chuwa.util.Feign.ItemService;
 import com.chuwa.util.Feign.KafkaClient;
 import com.chuwa.util.Feign.KafkaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,6 +86,7 @@ public class OrderController {
                 }
                 // suppose should use batch process to update item inventory
             }
+
 
             kafkaService.sendMessage(rtnOrder.getKey().getOrderId().toString(), rtnOrder);
 

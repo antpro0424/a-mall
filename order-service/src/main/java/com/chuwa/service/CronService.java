@@ -4,6 +4,7 @@ import com.chuwa.entity.Order;
 import com.chuwa.po.OrderStatusEnum;
 import com.chuwa.repository.OrderRepository;
 import com.chuwa.util.Feign.KafkaService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,11 @@ public class CronService {
         orders.forEach(System.out::println);
 
         orders.forEach(order -> {
-            kafkaService.sendMessage(order.getKey().getOrderId().toString(),order);
+            try {
+                kafkaService.sendMessage(order.getKey().getOrderId().toString(),order);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
 
             orderRepository.updateStatusIfVersionStatusMatches(
                     order.getKey().getOrderId(),

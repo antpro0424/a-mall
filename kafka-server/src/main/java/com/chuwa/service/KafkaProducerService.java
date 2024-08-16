@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaProducerService {
 
-    @Value("${kafka.topic.name}")
+    @Value("your-topic")
     private String topicName;
 
     @Autowired

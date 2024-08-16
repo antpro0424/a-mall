@@ -27,6 +27,9 @@ public class Item {
     private double unitPrice;
 
     @CassandraType(type = CassandraType.Name.INT)
+    private int quantity;
+
+    @CassandraType(type = CassandraType.Name.INT)
     private int availableUnits;
 
     @CassandraType(type = CassandraType.Name.TEXT)

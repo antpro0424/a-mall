@@ -10,4 +10,6 @@ public interface ItemClient {
 
     @GetMapping("/{id}")
     Item getItem(@PathVariable("id") String id) ;
+
+
 }

@@ -33,8 +33,8 @@ const Checkout = ({ cart, setOrderNumber }) => {
     };
 
 
-    // console.log(orderDetails)
-    axios.post('http://localhost:8084/api/v0/order/orders', orderDetails)
+    console.log(orderDetails)
+    axios.post('http://localhost:8084/api/v0/orders', orderDetails)
       .then(response => {
           console.log(response.data.searchId)
           setOrderNumber(response.data.searchId)

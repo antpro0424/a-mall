@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,20 +30,16 @@ public class OrderController {
 
     private final ItemService itemService;
 
-
     private final KafkaService kafkaService;
 
     @Autowired
     public OrderController(OrderService orderService, ItemService itemService, KafkaService kafkaService) {
         this.orderService = orderService;
-
         this.itemService = itemService;
         this.kafkaService = kafkaService;
     }
 
     @PostMapping
-
-
     @Transactional
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         try {
@@ -86,8 +80,6 @@ public class OrderController {
                 }
                 // suppose should use batch process to update item inventory
             }
-
-
             kafkaService.sendMessage(rtnOrder.getKey().getOrderId().toString(), rtnOrder);
 
             return new ResponseEntity<>(rtnOrder, HttpStatus.OK);
@@ -138,7 +130,6 @@ public class OrderController {
     @PutMapping("/address")
     public ResponseEntity<String> changeAddress(@RequestBody Address address) {
         try {
-
             Order order = orderService.findOrderByKey(new OrderPrimaryKey(address.getOrderId(), address.getCreatedDate(), address.getTimestamp()));
             Address oldAddress = order.getAddress();
             oldAddress.setDetailAddress(address.getDetailAddress());

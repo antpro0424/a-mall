@@ -16,20 +16,6 @@ spring:
     name: gateway
   cloud:
     gateway:
-      globalcors:
-        cors-configurations:
-          '[/**]': # 匹配所有请求
-            allowedOrigins:
-              - "http://localhost:3000"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders:
-              - "*"
-            allowCredentials: true
       routes:
         - id: account-service
           uri: lb://account-service

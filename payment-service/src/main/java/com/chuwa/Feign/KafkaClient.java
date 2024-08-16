@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "KafkaClient", url = "http://localhost:9099/api/v0/kafka/seek")
+@FeignClient(name = "KafkaClient", url = "http://localhost:9099/v0/kafka/seek")
 public interface KafkaClient {
     @GetMapping
     List<String> seek();

@@ -12,7 +12,7 @@ public class KafkaProducerController {
     @Autowired
     private KafkaProducerService kafkaProducerService;
 
-    @PostMapping("/api/v0/kafka/publish")
+    @PostMapping("/v0/kafka/publish")
     public String publishMessage(@RequestParam("key") String key, @RequestParam("message") String message) {
         kafkaProducerService.sendMessage(key, message);
         return "Message published successfully";

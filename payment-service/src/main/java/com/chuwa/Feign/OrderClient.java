@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
-@FeignClient(name = "OrderService", url = "http://localhost:8084/api/v0/orders")
+@FeignClient(name = "OrderService", url = "http://localhost:8084//v0/orders")
 public interface OrderClient {
     @PutMapping("/status")
     void updateStatus(@RequestBody UpdateStatus status); // update to PAID

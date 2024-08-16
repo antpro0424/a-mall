@@ -1,0 +1,29 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: cart-service # 微服务名称
+  profiles:
+    active: dev
+  datasource:
+    url: 'jdbc:mysql://localhost:13307/amall'
+    username: root
+    password: '0424'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # 自动创建或更新表结构
+    show-sql: true      # 显示SQL语句
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true  # 格式化SQL输出
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Eureka Server 的地址
+  instance:
+    ip-address: localhost
+    prefer-ip-address: true  # 使用 IP 地址而不是主机名注册
